@@ -835,7 +835,13 @@ PlayerSettings:
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
   cloudServicesEnabled:
+    Build: 0
+    Game Performance: 0
+    Legacy Analytics: 0
+    Purchasing: 0
+    UDP: 0
     UNet: 1
+    Unity Ads: 0
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -855,11 +861,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
-  cloudProjectId: b307fb94-8f5e-4bfe-9619-833538b6d977
+  cloudProjectId: bc0d2702-88b9-40fa-8004-0cefdcb597d5
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
   projectName: ocha_vr
-  organizationId: meikentarocheese_unity
+  organizationId: yamashiroko
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
