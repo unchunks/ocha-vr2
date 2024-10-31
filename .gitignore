@@ -70,3 +70,19 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+Assets/Ocha_sample2.unity
+Assets/Oculus/OculusProjectConfig.asset
+Assets/Resources/SplashScreenSettings.asset
+Assets/Resources/SplashScreenSettings.asset.meta
+Packages/manifest.json
+Packages/packages-lock.json
+ProjectSettings/InputManager.asset
+ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json
+Assets/Ocha_sample2.unity
+Assets/Oculus/OculusProjectConfig.asset
+Assets/Resources/SplashScreenSettings.asset
+Assets/Resources/SplashScreenSettings.asset.meta
+Packages/manifest.json
+Packages/packages-lock.json
+ProjectSettings/InputManager.asset
+ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json
