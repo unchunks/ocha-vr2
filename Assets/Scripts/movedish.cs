@@ -16,7 +16,7 @@ public class movedish : MonoBehaviour
     {
         if(isMoving)
         {
-            transform.position += new Vector3(0.003f, 0, 0);
+            transform.position += new Vector3(0, 0, 0.003f);
         }
     }
 
