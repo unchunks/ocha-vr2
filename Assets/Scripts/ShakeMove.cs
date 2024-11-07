@@ -58,14 +58,14 @@ public class ShakeMove : MonoBehaviour
             }
             if((leftHandDirectionZ == -1) && (leftHandVelocityZ < -lowerSpeed))
             {
-                // cameraRig.transform.position += new Vector3(0, 0,  -leftHandVelocityZ * moveSpeed);
+                cameraRig.transform.position += new Vector3(0, 0,  -leftHandVelocityZ * moveSpeed);
                 // cameraRb.AddForce(0, 0, -leftHandVelocityZ * moveSpeed); 
-                cameraRb.velocity = new Vector3(0, 0, -rightHandVelocityZ * moveSpeed);
+                // cameraRb.velocity = new Vector3(0, 0, -rightHandVelocityZ * moveSpeed);
             }
             if((rightHandDirectionZ == -1) && (rightHandVelocityZ < -lowerSpeed))
             {
-                // cameraRig.transform.position += new Vector3(0, 0,  -rightHandVelocityZ * moveSpeed);
-                cameraRb.velocity = new Vector3(0, 0, -rightHandVelocityZ * moveSpeed);
+                cameraRig.transform.position += new Vector3(0, 0,  -rightHandVelocityZ * moveSpeed);
+                // cameraRb.velocity = new Vector3(0, 0, -rightHandVelocityZ * moveSpeed);
             }
         }
         else if((120 < rotateY && rotateY < 240))
@@ -76,20 +76,20 @@ public class ShakeMove : MonoBehaviour
             }
             if((leftHandDirectionZ == 1) && (leftHandVelocityZ > lowerSpeed))
             {
-                // cameraRig.transform.position += new Vector3(0, 0,  -leftHandVelocityZ * moveSpeed);
-                cameraRb.velocity = new Vector3(0, 0, -rightHandVelocityZ * moveSpeed);
+                cameraRig.transform.position += new Vector3(0, 0,  -leftHandVelocityZ * moveSpeed);
+                // cameraRb.velocity = new Vector3(0, 0, -rightHandVelocityZ * moveSpeed);
             }
             if((rightHandDirectionZ == 1) && (rightHandVelocityZ > lowerSpeed))
             {
-                // cameraRig.transform.position += new Vector3(0, 0,  -rightHandVelocityZ * moveSpeed);
-                cameraRb.velocity = new Vector3(0, 0, -rightHandVelocityZ * moveSpeed);
+                cameraRig.transform.position += new Vector3(0, 0,  -rightHandVelocityZ * moveSpeed);
+                // cameraRb.velocity = new Vector3(0, 0, -rightHandVelocityZ * moveSpeed);
             }
         }
         // 両手の動きが十分小さいとき速度を0
-        if(Mathf.Abs(leftHandVelocityZ) < upperSpeed && Mathf.Abs(rightHandVelocityZ) < upperSpeed)
-        {
-            cameraRb.velocity = Vector3.zero;
-        }
+        // if(Mathf.Abs(leftHandVelocityZ) < upperSpeed && Mathf.Abs(rightHandVelocityZ) < upperSpeed)
+        // {
+        //     cameraRb.velocity = Vector3.zero;
+        // }
 
         // 現在の手の位置を次のフレームに向けて保存
         previousLeftHandPositionZ = leftHand.transform.position.z;
