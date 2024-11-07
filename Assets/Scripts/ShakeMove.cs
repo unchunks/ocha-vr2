@@ -12,77 +12,83 @@ public class ShakeMove : MonoBehaviour
 
     [SerializeField] GameObject centerEyeAnchor; // 移動させるのはカメラリグ、位置を取得するのはセンターアイアンカー
 
-    private Vector3 previousLeftHandPosition;
-    private Vector3 previousRightHandPosition;
-    private Vector3 leftHandVelocity;
-    private Vector3 rightHandVelocity;
-    private float positiveLeftVelocity;
-    private float positiveRightVelocity;
-    private float positiveTotalVelocity;
+    [SerializeField] float moveSpeed; // 移動速度
+    [SerializeField] float lowerSpeed; // 下限速度
 
-    private float leftHandDirection;
-    private float rightHandDirection;
-
+    private float previousLeftHandPositionZ;
+    private float previousRightHandPositionZ;
+    private float leftHandVelocityZ;
+    private float rightHandVelocityZ;
+    private float leftHandDirectionZ;
+    private float rightHandDirectionZ;
     private float rotateY;
 
     void Start()
     {
         // 初期位置を保存
-        previousLeftHandPosition = leftHand.transform.position;
-        previousRightHandPosition = rightHand.transform.position;
+        previousLeftHandPositionZ = leftHand.transform.position.z;
+        previousRightHandPositionZ = rightHand.transform.position.z;
         
     }
 
     void Update()
     {
         // フレーム間の手の位置の変化を元に速度を計算
-        leftHandVelocity =  ( leftHand.transform.position - previousLeftHandPosition) / Time.deltaTime;
-        rightHandVelocity = (rightHand.transform.position - previousRightHandPosition) / Time.deltaTime;
+        leftHandVelocityZ =  ( leftHand.transform.position.z - previousLeftHandPositionZ) / Time.deltaTime;
+        rightHandVelocityZ = (rightHand.transform.position.z - previousRightHandPositionZ) / Time.deltaTime;
 
         // 向いている角度を取得
         rotateY = centerEyeAnchor.transform.rotation.eulerAngles.y;
         
         // 手の速度の正負を取得
-        leftHandDirection = Mathf.Sign(leftHandVelocity.z);
-        rightHandDirection = Mathf.Sign(rightHandVelocity.z);
+        leftHandDirectionZ = Mathf.Sign(leftHandVelocityZ);
+        rightHandDirectionZ = Mathf.Sign(rightHandVelocityZ);
 
         // 向いている方向に移動
         if((300 < rotateY && rotateY <= 360) || (0 <= rotateY && rotateY < 60))
         {
-            if(leftHandDirection == -1)
+            if(leftHandVelocityZ < -lowerSpeed)
             {
-                cameraRig.transform.position += new Vector3(0, 0,  -leftHandVelocity.z * 0.01f);
+                Debug.Log("leftHandVelocityZ: " + leftHandVelocityZ);
             }
-            if(rightHandDirection == -1)
+            if((leftHandDirectionZ == -1) && (leftHandVelocityZ < -lowerSpeed))
             {
-                cameraRig.transform.position += new Vector3(0, 0,  -rightHandVelocity.z * 0.01f);
+                cameraRig.transform.position += new Vector3(0, 0,  -leftHandVelocityZ * moveSpeed);
+            }
+            if((rightHandDirectionZ == -1) && (rightHandVelocityZ < -lowerSpeed))
+            {
+                cameraRig.transform.position += new Vector3(0, 0,  -rightHandVelocityZ * moveSpeed);
             }
         }
         else if((120 < rotateY && rotateY < 240))
         {
-            if(leftHandDirection == 1)
+            if(leftHandVelocityZ > lowerSpeed)
             {
-                cameraRig.transform.position += new Vector3(0, 0,  -leftHandVelocity.z * 0.01f);
+                Debug.Log("leftHandVelocityZ: " + leftHandVelocityZ);
             }
-            if(rightHandDirection == 1)
+            if((leftHandDirectionZ == 1) && (leftHandVelocityZ > lowerSpeed))
             {
-                cameraRig.transform.position += new Vector3(0, 0,  -rightHandVelocity.z * 0.01f);
+                cameraRig.transform.position += new Vector3(0, 0,  -leftHandVelocityZ * moveSpeed);
+            }
+            if((rightHandDirectionZ == 1) && (rightHandVelocityZ > lowerSpeed))
+            {
+                cameraRig.transform.position += new Vector3(0, 0,  -rightHandVelocityZ * moveSpeed);
             }
         }
 
         // 現在の手の位置を次のフレームに向けて保存
-        previousLeftHandPosition = leftHand.transform.position;
-        previousRightHandPosition = rightHand.transform.position;
+        previousLeftHandPositionZ = leftHand.transform.position.z;
+        previousRightHandPositionZ = rightHand.transform.position.z;
     }
 
     // 速度を外部から取得するためのメソッド
-    public Vector3 GetLeftHandVelocity()
+    public float GetLeftHandVelocity()
     {
-        return leftHandVelocity;
+        return leftHandVelocityZ;
     }
 
-    public Vector3 GetRightHandVelocity()
+    public float GetRightHandVelocity()
     {
-        return rightHandVelocity;
+        return rightHandVelocityZ;
     }
 }

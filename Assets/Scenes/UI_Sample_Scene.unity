@@ -10365,6 +10365,8 @@ MonoBehaviour:
   leftHand: {fileID: 1252968990}
   rightHand: {fileID: 1498674412}
   centerEyeAnchor: {fileID: 2089623998}
+  moveSpeed: 0.008
+  lowerSpeed: 1.7
 --- !u!4 &2130033275
 Transform:
   m_ObjectHideFlags: 0
