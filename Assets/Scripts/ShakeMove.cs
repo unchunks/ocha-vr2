@@ -26,6 +26,9 @@ public class ShakeMove : MonoBehaviour
     private float rightHandDirectionZ;
     private float rotateY;
 
+    private bool isLeftHandWristDown = false;
+    private bool isRightHandWristDown = false;
+
 
 
     void Start()
@@ -52,17 +55,14 @@ public class ShakeMove : MonoBehaviour
         // 向いている方向に移動
         if((300 < rotateY && rotateY <= 360) || (0 <= rotateY && rotateY < 60))
         {
-            if(leftHandVelocityZ < -lowerSpeed)
-            {
-                Debug.Log("leftHandVelocityZ: " + leftHandVelocityZ);
-            }
-            if((leftHandDirectionZ == -1) && (leftHandVelocityZ < -lowerSpeed))
+            // 左手が下向きで速度が下限速度より大きく引く動きをしたとき
+            if(isLeftHandWristDown && (leftHandDirectionZ == -1) && (leftHandVelocityZ < -lowerSpeed) )
             {
                 cameraRig.transform.position += new Vector3(0, 0,  -leftHandVelocityZ * moveSpeed);
                 // cameraRb.AddForce(0, 0, -leftHandVelocityZ * moveSpeed); 
                 // cameraRb.velocity = new Vector3(0, 0, -rightHandVelocityZ * moveSpeed);
             }
-            if((rightHandDirectionZ == -1) && (rightHandVelocityZ < -lowerSpeed))
+            if(isRightHandWristDown && (rightHandDirectionZ == -1) && (rightHandVelocityZ < -lowerSpeed))
             {
                 cameraRig.transform.position += new Vector3(0, 0,  -rightHandVelocityZ * moveSpeed);
                 // cameraRb.velocity = new Vector3(0, 0, -rightHandVelocityZ * moveSpeed);
@@ -70,16 +70,12 @@ public class ShakeMove : MonoBehaviour
         }
         else if((120 < rotateY && rotateY < 240))
         {
-            if(leftHandVelocityZ > lowerSpeed)
-            {
-                Debug.Log("leftHandVelocityZ: " + leftHandVelocityZ);
-            }
-            if((leftHandDirectionZ == 1) && (leftHandVelocityZ > lowerSpeed))
+            if(isLeftHandWristDown && (leftHandDirectionZ == 1) && (leftHandVelocityZ > lowerSpeed))
             {
                 cameraRig.transform.position += new Vector3(0, 0,  -leftHandVelocityZ * moveSpeed);
                 // cameraRb.velocity = new Vector3(0, 0, -rightHandVelocityZ * moveSpeed);
             }
-            if((rightHandDirectionZ == 1) && (rightHandVelocityZ > lowerSpeed))
+            if(isRightHandWristDown && (rightHandDirectionZ == 1) && (rightHandVelocityZ > lowerSpeed))
             {
                 cameraRig.transform.position += new Vector3(0, 0,  -rightHandVelocityZ * moveSpeed);
                 // cameraRb.velocity = new Vector3(0, 0, -rightHandVelocityZ * moveSpeed);
@@ -94,6 +90,23 @@ public class ShakeMove : MonoBehaviour
         // 現在の手の位置を次のフレームに向けて保存
         previousLeftHandPositionZ = leftHand.transform.position.z;
         previousRightHandPositionZ = rightHand.transform.position.z;
+    }
+
+    public void onLeftHandWristDown()
+    {
+        isLeftHandWristDown = true;
+    }
+    public void offLeftHandWristDown()
+    {
+        isLeftHandWristDown = false;
+    }
+    public void onRightHandWristDown()
+    {
+        isRightHandWristDown = true;
+    }
+    public void offRightHandWristDown()
+    {
+        isRightHandWristDown = false;
     }
 
     // 速度を外部から取得するためのメソッド
