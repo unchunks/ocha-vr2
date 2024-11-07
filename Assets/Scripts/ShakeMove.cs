@@ -7,13 +7,16 @@ using OculusSampleFramework;
 public class ShakeMove : MonoBehaviour
 {
     [SerializeField] GameObject cameraRig; // CameraRigのGameObject
+    [SerializeField] Rigidbody cameraRb; // Rigidbodyコンポーネント
     [SerializeField] OVRHand leftHand; // 左手のOVRHandコンポーネント
     [SerializeField] OVRHand rightHand; // 右手のOVRHandコンポーネント
 
     [SerializeField] GameObject centerEyeAnchor; // 移動させるのはカメラリグ、位置を取得するのはセンターアイアンカー
 
+
     [SerializeField] float moveSpeed; // 移動速度
     [SerializeField] float lowerSpeed; // 下限速度
+    [SerializeField] float upperSpeed; // 上限速度
 
     private float previousLeftHandPositionZ;
     private float previousRightHandPositionZ;
@@ -22,6 +25,8 @@ public class ShakeMove : MonoBehaviour
     private float leftHandDirectionZ;
     private float rightHandDirectionZ;
     private float rotateY;
+
+
 
     void Start()
     {
@@ -53,11 +58,14 @@ public class ShakeMove : MonoBehaviour
             }
             if((leftHandDirectionZ == -1) && (leftHandVelocityZ < -lowerSpeed))
             {
-                cameraRig.transform.position += new Vector3(0, 0,  -leftHandVelocityZ * moveSpeed);
+                // cameraRig.transform.position += new Vector3(0, 0,  -leftHandVelocityZ * moveSpeed);
+                // cameraRb.AddForce(0, 0, -leftHandVelocityZ * moveSpeed); 
+                cameraRb.velocity = new Vector3(0, 0, -rightHandVelocityZ * moveSpeed);
             }
             if((rightHandDirectionZ == -1) && (rightHandVelocityZ < -lowerSpeed))
             {
-                cameraRig.transform.position += new Vector3(0, 0,  -rightHandVelocityZ * moveSpeed);
+                // cameraRig.transform.position += new Vector3(0, 0,  -rightHandVelocityZ * moveSpeed);
+                cameraRb.velocity = new Vector3(0, 0, -rightHandVelocityZ * moveSpeed);
             }
         }
         else if((120 < rotateY && rotateY < 240))
@@ -68,12 +76,19 @@ public class ShakeMove : MonoBehaviour
             }
             if((leftHandDirectionZ == 1) && (leftHandVelocityZ > lowerSpeed))
             {
-                cameraRig.transform.position += new Vector3(0, 0,  -leftHandVelocityZ * moveSpeed);
+                // cameraRig.transform.position += new Vector3(0, 0,  -leftHandVelocityZ * moveSpeed);
+                cameraRb.velocity = new Vector3(0, 0, -rightHandVelocityZ * moveSpeed);
             }
             if((rightHandDirectionZ == 1) && (rightHandVelocityZ > lowerSpeed))
             {
-                cameraRig.transform.position += new Vector3(0, 0,  -rightHandVelocityZ * moveSpeed);
+                // cameraRig.transform.position += new Vector3(0, 0,  -rightHandVelocityZ * moveSpeed);
+                cameraRb.velocity = new Vector3(0, 0, -rightHandVelocityZ * moveSpeed);
             }
+        }
+        // 両手の動きが十分小さいとき速度を0
+        if(Mathf.Abs(leftHandVelocityZ) < upperSpeed && Mathf.Abs(rightHandVelocityZ) < upperSpeed)
+        {
+            cameraRb.velocity = Vector3.zero;
         }
 
         // 現在の手の位置を次のフレームに向けて保存
