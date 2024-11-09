@@ -8,6 +8,8 @@ public class PlayFabController : MonoBehaviour
     const string STATISTICS_NAME = "HighScore";
     private string userName = "やましろ";
 
+    private string debugString = "First";
+
     void Start()
     {
         PlayFabClientAPI.LoginWithCustomID(
@@ -15,6 +17,7 @@ public class PlayFabController : MonoBehaviour
             result => {
                 Debug.Log("ログイン成功！");
                 SetUserName(userName);
+
             },
             error => Debug.Log("ログイン失敗"));
     }
@@ -70,7 +73,10 @@ public class PlayFabController : MonoBehaviour
             result =>
             {
                 result.Leaderboard.ForEach(
-                    x => Debug.Log(string.Format("{0}位:{1} スコア{2}", x.Position + 1, x.DisplayName, x.StatValue))
+                    x => {
+                        Debug.Log(string.Format("{0}位:{1} スコア{2}", x.Position + 1, x.DisplayName, x.StatValue));
+                        debugString = string.Format("{0}位:{1} スコア{2}", x.Position + 1, x.DisplayName, x.StatValue);
+                    }
                     );
             },
             error =>
@@ -93,12 +99,18 @@ public class PlayFabController : MonoBehaviour
         void OnSuccess(UpdateUserTitleDisplayNameResult result)
         {
             Debug.Log("success!");
+            RequestLeaderBoard();
         }
 
         void OnError(PlayFabError error)
         {
             Debug.Log($"{error.Error}");
         }
+    }
+
+    public string GetDebugString()
+    {
+        return debugString;
     }
 
 }
