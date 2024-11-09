@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TimerSlider timerSlider;
     [SerializeField] private Basket basket;
     [SerializeField] private PlayFabController playFabController;
+    [SerializeField] private GameObject rankingObj;
     float countDownTime = 3.0f;
     private int score;
 
@@ -69,18 +71,24 @@ public class GameManager : MonoBehaviour
         // ここでスコアを送信する
         score = 500;
         Debug.Log("finshiGame: " + score);
+        rankingObj.SetActive(true);
         playFabController.SubmitScore(score);
     }
 
     // 以下二つは名前を保存するかしないか
     public void EndGame()
     {
-
+        //名前を保存しない
+        playerId = "";
+        playerName = "";
+        //シーンをリロード
+        SceneManager.LoadScene("UI_Sample_Scene");
     }
 
     public void RetryGame()
     {
-        
+        //シーンをリロード
+        SceneManager.LoadScene("UI_Sample_Scene");
     }
 
 }

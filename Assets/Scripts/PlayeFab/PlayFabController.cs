@@ -6,11 +6,10 @@ using UnityEngine;
 
 public class PlayFabController : MonoBehaviour
 {
+    [SerializeField] private GameObject gameManager;
     const string STATISTICS_NAME = "HighScore";
 
     private string debugString = "First";
-
-    private string dateId = "";
 
     void Start()
     {
@@ -20,10 +19,14 @@ public class PlayFabController : MonoBehaviour
     public void LogInPlayFab(string userName)
     {
         // 日付と時刻をIDにする
-        dateId = DateTime.Now.ToString();
+        if(GameManager.playerId == "")
+        {
+            GameManager.playerId = DateTime.Now.ToString();
+        }
+
 
         PlayFabClientAPI.LoginWithCustomID(
-            new LoginWithCustomIDRequest { CustomId = dateId, CreateAccount = true},
+            new LoginWithCustomIDRequest { CustomId = GameManager.playerId, CreateAccount = true},
             result => {
                 Debug.Log("ログイン成功！");
                 SetUserName(userName);
