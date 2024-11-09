@@ -86,3 +86,5 @@ Packages/manifest.json
 Packages/packages-lock.json
 ProjectSettings/InputManager.asset
 ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json
+
+Assets/Fonts/NotoSerifJP-Medium SDF.asset
