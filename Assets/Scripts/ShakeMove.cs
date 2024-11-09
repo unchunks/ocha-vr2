@@ -38,7 +38,6 @@ public class ShakeMove : MonoBehaviour
         // 初期位置を保存
         previousLeftHandPositionZ = leftHand.transform.position.z;
         previousRightHandPositionZ = rightHand.transform.position.z;
-        
     }
 
     void Update()

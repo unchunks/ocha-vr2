@@ -1,38 +1,48 @@
 using PlayFab;
 using PlayFab.ClientModels;
+using System; //DateTimeを使用する為追加。
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayFabController : MonoBehaviour
 {
     const string STATISTICS_NAME = "HighScore";
-    private string userName = "やましろ";
 
     private string debugString = "First";
 
+    private string dateId = "";
+
     void Start()
     {
+        
+    }
+
+    public void LogInPlayFab(string userName)
+    {
+        // 日付と時刻をIDにする
+        dateId = DateTime.Now.ToString();
+
         PlayFabClientAPI.LoginWithCustomID(
-            new LoginWithCustomIDRequest { CustomId = userName, CreateAccount = true},
+            new LoginWithCustomIDRequest { CustomId = dateId, CreateAccount = true},
             result => {
                 Debug.Log("ログイン成功！");
                 SetUserName(userName);
-
             },
             error => Debug.Log("ログイン失敗"));
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SubmitScore(300);
-        }
+        // デバッグ用
+        // if (Input.GetKeyDown(KeyCode.Space))
+        // {
+        //     SubmitScore(300);
+        // }
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            RequestLeaderBoard();
-        }
+        // if (Input.GetKeyDown(KeyCode.R))
+        // {
+        //     RequestLeaderBoard();
+        // }
     }
 
     void SubmitScore(int playerScore)
