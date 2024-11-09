@@ -29,6 +29,8 @@ public class ShakeMove : MonoBehaviour
     private bool isLeftHandWristDown = false;
     private bool isRightHandWristDown = false;
 
+    private bool canMove = false;
+
 
 
     void Start()
@@ -41,6 +43,14 @@ public class ShakeMove : MonoBehaviour
 
     void Update()
     {
+        // スタートを押したら動ける
+        if(canMove)
+        {
+            Move();
+        }
+    }
+
+    void Move(){
         // フレーム間の手の位置の変化を元に速度を計算
         leftHandVelocityZ =  ( leftHand.transform.position.z - previousLeftHandPositionZ) / Time.deltaTime;
         rightHandVelocityZ = (rightHand.transform.position.z - previousRightHandPositionZ) / Time.deltaTime;
@@ -81,11 +91,6 @@ public class ShakeMove : MonoBehaviour
                 // cameraRb.velocity = new Vector3(0, 0, -rightHandVelocityZ * moveSpeed);
             }
         }
-        // 両手の動きが十分小さいとき速度を0
-        // if(Mathf.Abs(leftHandVelocityZ) < upperSpeed && Mathf.Abs(rightHandVelocityZ) < upperSpeed)
-        // {
-        //     cameraRb.velocity = Vector3.zero;
-        // }
 
         // 現在の手の位置を次のフレームに向けて保存
         previousLeftHandPositionZ = leftHand.transform.position.z;
@@ -109,14 +114,8 @@ public class ShakeMove : MonoBehaviour
         isRightHandWristDown = false;
     }
 
-    // 速度を外部から取得するためのメソッド
-    public float GetLeftHandVelocity()
+    public void onCanMove()
     {
-        return leftHandVelocityZ;
-    }
-
-    public float GetRightHandVelocity()
-    {
-        return rightHandVelocityZ;
+        canMove = true;
     }
 }
