@@ -14,12 +14,6 @@ public class InputText : MonoBehaviour
         inputField.text = GameManager.playerName;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void OnEnterEnd()
     {
         // 3文字以上の名前がつけられたら

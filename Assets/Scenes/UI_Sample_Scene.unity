@@ -495,7 +495,7 @@ PrefabInstance:
     - target: {fileID: 8434824762051719496, guid: f4ae769ba4a46d84c9e04c6914423ca2, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 407306244}
+      objectReference: {fileID: 1292647667}
     - target: {fileID: 8434824762051719496, guid: f4ae769ba4a46d84c9e04c6914423ca2, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
@@ -1354,8 +1354,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39b17f7ad52a11f4492412b1fa542faf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  namesList: []
-  scoresList: []
+  namesList:
+  - {fileID: 2067372406}
+  - {fileID: 2098696363}
+  - {fileID: 180206473}
+  scoresList:
+  - {fileID: 593058314}
+  - {fileID: 1004449077}
+  - {fileID: 1918220630}
+  myRank: {fileID: 1085721565}
+  myName: {fileID: 310965630}
+  myScore: {fileID: 1535029092}
 --- !u!1 &104789835 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5096946251293843407, guid: f54012181eacade4ea242c65f804720f, type: 3}
@@ -4105,29 +4114,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a7676b01585ce43908639a27765dfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &407306237 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6557706223105272004, guid: 6b196de96e7d16b4297c1980179ae439, type: 3}
-  m_PrefabInstance: {fileID: 1192256298}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &407306238 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3563149335964526229, guid: 6b196de96e7d16b4297c1980179ae439, type: 3}
   m_PrefabInstance: {fileID: 1192256298}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &407306244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 407306237}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4af3c08595ef2bf47b5d5fc9461230b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UiObj: {fileID: 407306237}
 --- !u!1001 &413853095
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10710,9 +10701,9 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 887618315}
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6557706223105272004, guid: 6b196de96e7d16b4297c1980179ae439, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 2121831639775495873, guid: 6b196de96e7d16b4297c1980179ae439, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 407306244}
+      addedObject: {fileID: 1292647667}
   m_SourcePrefab: {fileID: 100100000, guid: 6b196de96e7d16b4297c1980179ae439, type: 3}
 --- !u!1 &1194742267
 GameObject:
@@ -11294,11 +11285,29 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2483171112402218544, guid: f54012181eacade4ea242c65f804720f, type: 3}
   m_PrefabInstance: {fileID: 377351178}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1292647659 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2121831639775495873, guid: 6b196de96e7d16b4297c1980179ae439, type: 3}
+  m_PrefabInstance: {fileID: 1192256298}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1292647666 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 897537686178030139, guid: 6b196de96e7d16b4297c1980179ae439, type: 3}
   m_PrefabInstance: {fileID: 1192256298}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1292647667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1292647659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af3c08595ef2bf47b5d5fc9461230b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UiObj: {fileID: 1292647659}
 --- !u!1001 &1293423688
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12061,7 +12070,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64b9fd8dece76d8499d3a3eeed5a1dcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
+  rankingDisplay: {fileID: 81728061}
 --- !u!1 &1388424473
 GameObject:
   m_ObjectHideFlags: 0

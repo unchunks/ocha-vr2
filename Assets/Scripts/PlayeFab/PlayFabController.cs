@@ -1,15 +1,15 @@
 using PlayFab;
 using PlayFab.ClientModels;
 using System; //DateTimeを使用する為追加。
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayFabController : MonoBehaviour
 {
-    [SerializeField] private GameObject gameManager;
+    // [SerializeField] private GameObject gameManager;
     const string STATISTICS_NAME = "HighScore";
-
-    private string debugString = "First";
+    [SerializeField] private RankingDisplay rankingDisplay;
 
     void Start()
     {
@@ -23,7 +23,6 @@ public class PlayFabController : MonoBehaviour
         {
             GameManager.playerId = DateTime.Now.ToString();
         }
-
 
         PlayFabClientAPI.LoginWithCustomID(
             new LoginWithCustomIDRequest { CustomId = GameManager.playerId, CreateAccount = true},
@@ -60,7 +59,6 @@ public class PlayFabController : MonoBehaviour
     // スコア送信後にランキングを取得する
     public void SubmitScore(int playerScore)
     {
-        Debug.Log("スコア送信するよお");
         PlayFabClientAPI.UpdatePlayerStatistics(
             new UpdatePlayerStatisticsRequest
             {
@@ -76,34 +74,38 @@ public class PlayFabController : MonoBehaviour
             result =>
             {
                 Debug.Log("スコア送信完了です");
-                RequestLeaderBoard();
+                StartCoroutine(DelayCoroutine(3, () =>
+                {
+                   RequestLeaderBoard();
+                   RequestAroundRanking();
+                }));
+
+                
             },
             error =>
             {
                 Debug.Log(error.GenerateErrorReport());
                 RequestLeaderBoard();
+                RequestAroundRanking();
             }
         );
     }
     public void RequestLeaderBoard()
     {
-        Debug.Log("ランキング取得するよ");
         PlayFabClientAPI.GetLeaderboard(
             new GetLeaderboardRequest
             {
                 StatisticName = STATISTICS_NAME,
                 StartPosition = 0,
-                MaxResultsCount = 5
+                MaxResultsCount = 3
             },
             result =>
             {
                 result.Leaderboard.ForEach(
                     x => {
-                        
-                        Debug.Log(string.Format("{0}位:{1} スコア{2}", x.Position + 1, x.DisplayName, x.StatValue));
-                        debugString = string.Format("{0}位:{1} スコア{2}", x.Position + 1, x.DisplayName, x.StatValue);
+                        rankingDisplay.setRanking(x.Position, x.DisplayName, x.StatValue.ToString());
                     }
-                    );
+                );
             },
             error =>
             {
@@ -113,11 +115,34 @@ public class PlayFabController : MonoBehaviour
     }
 
 
-
-
-    public string GetDebugString()
+    // 自分の周りのランキングを取得する countが1のため、自分のランキングのみを取得する
+    private void RequestAroundRanking()
     {
-        return debugString;
+        var request = new GetLeaderboardAroundPlayerRequest
+        {
+            StatisticName = STATISTICS_NAME, // 統計情報名を指定します。
+            MaxResultsCount = 1 // 自分と+-5位をあわせて合計11件を取得します。
+        };
+
+        PlayFabClientAPI.GetLeaderboardAroundPlayer(request, OnSuccess, OnError);
+
+        void OnSuccess(GetLeaderboardAroundPlayerResult leaderboardResult)
+        {
+            foreach (var item in leaderboardResult.Leaderboard)
+            {
+                rankingDisplay.setAroundRanking((item.Position).ToString(), item.DisplayName, item.StatValue.ToString());
+            }
+        }
+
+        void OnError(PlayFabError error)
+        {
+            Debug.Log($"{error.Error}");
+        }
     }
 
+    private IEnumerator DelayCoroutine(float seconds, Action action)
+    {
+        yield return new WaitForSeconds(seconds);
+        action?.Invoke();
+    }
 }

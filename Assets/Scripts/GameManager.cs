@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static string playerId;
-    public static string playerName;
+    public static string playerId = "";
+    public static string playerName = "";
 
     [SerializeField] private TextMeshProUGUI countDownText;
     [SerializeField] private ShakeMove shakeMove;
