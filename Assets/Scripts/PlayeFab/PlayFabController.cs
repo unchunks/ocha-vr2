@@ -30,23 +30,34 @@ public class PlayFabController : MonoBehaviour
             },
             error => Debug.Log("ログイン失敗"));
     }
+    private void SetUserName(string userName)
+    {
+        var request = new UpdateUserTitleDisplayNameRequest
+        {
+            DisplayName = userName
+        };
+
+        PlayFabClientAPI.UpdateUserTitleDisplayName(request, OnSuccess, OnError);
+
+        void OnSuccess(UpdateUserTitleDisplayNameResult result)
+        {
+            Debug.Log("success!");
+        }
+
+        void OnError(PlayFabError error)
+        {
+            Debug.Log($"{error.Error}");
+        }
+    }
 
     void Update()
     {
-        // デバッグ用
-        // if (Input.GetKeyDown(KeyCode.Space))
-        // {
-        //     SubmitScore(300);
-        // }
-
-        // if (Input.GetKeyDown(KeyCode.R))
-        // {
-        //     RequestLeaderBoard();
-        // }
     }
 
-    void SubmitScore(int playerScore)
+    // スコア送信後にランキングを取得する
+    public void SubmitScore(int playerScore)
     {
+        Debug.Log("スコア送信するよお");
         PlayFabClientAPI.UpdatePlayerStatistics(
             new UpdatePlayerStatisticsRequest
             {
@@ -61,18 +72,19 @@ public class PlayFabController : MonoBehaviour
             },
             result =>
             {
-                Debug.Log("スコア送信");
+                Debug.Log("スコア送信完了です");
+                RequestLeaderBoard();
             },
             error =>
             {
                 Debug.Log(error.GenerateErrorReport());
+                RequestLeaderBoard();
             }
-            );
+        );
     }
-
-
-    void RequestLeaderBoard()
+    public void RequestLeaderBoard()
     {
+        Debug.Log("ランキング取得するよ");
         PlayFabClientAPI.GetLeaderboard(
             new GetLeaderboardRequest
             {
@@ -84,6 +96,7 @@ public class PlayFabController : MonoBehaviour
             {
                 result.Leaderboard.ForEach(
                     x => {
+                        
                         Debug.Log(string.Format("{0}位:{1} スコア{2}", x.Position + 1, x.DisplayName, x.StatValue));
                         debugString = string.Format("{0}位:{1} スコア{2}", x.Position + 1, x.DisplayName, x.StatValue);
                     }
@@ -97,26 +110,7 @@ public class PlayFabController : MonoBehaviour
     }
 
 
-    private void SetUserName(string userName)
-    {
-        var request = new UpdateUserTitleDisplayNameRequest
-        {
-            DisplayName = userName
-        };
 
-        PlayFabClientAPI.UpdateUserTitleDisplayName(request, OnSuccess, OnError);
-
-        void OnSuccess(UpdateUserTitleDisplayNameResult result)
-        {
-            Debug.Log("success!");
-            RequestLeaderBoard();
-        }
-
-        void OnError(PlayFabError error)
-        {
-            Debug.Log($"{error.Error}");
-        }
-    }
 
     public string GetDebugString()
     {

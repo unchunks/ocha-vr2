@@ -11,13 +11,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI countDownText;
     [SerializeField] private ShakeMove shakeMove;
     [SerializeField] private TimerSlider timerSlider;
+    [SerializeField] private Basket basket;
+    [SerializeField] private PlayFabController playFabController;
     float countDownTime = 3.0f;
+    private int score;
 
     public enum GameStatus
     {
-          PREVSTART,    // グー
-          COUNTDOWNING,  // チョキ
-          FINISHED,    // パー
+          PREVSTART,  
+          COUNTDOWNING, 
+          PLAYING,      
+          FINISHED, 
     }
 
     private GameStatus gameStatus;
@@ -49,12 +53,34 @@ public class GameManager : MonoBehaviour
 
     void StartGame()
     {
-        gameStatus = GameStatus.FINISHED;
+        gameStatus = GameStatus.PLAYING;
         // 動けるようにする
         shakeMove.onCanMove();
-
         // タイマー開始
         timerSlider.onTimerStart();
+    }
+
+    public void finishGame()
+    {
+        gameStatus = GameStatus.FINISHED;
+        // 集計を行う
+        score = basket.GetScore();
+
+        // ここでスコアを送信する
+        score = 500;
+        Debug.Log("finshiGame: " + score);
+        playFabController.SubmitScore(score);
+    }
+
+    // 以下二つは名前を保存するかしないか
+    public void EndGame()
+    {
+
+    }
+
+    public void RetryGame()
+    {
+        
     }
 
 }

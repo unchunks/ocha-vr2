@@ -7,8 +7,7 @@ using UnityEngine.Events;
 public class Basket : MonoBehaviour
 {
     [SerializeField] GameObject basket; // 籠のオブジェクト
-    public int score = 0; // 現在のスコア
-    public int scoreValue = 10; // 加算/減算されるスコアの値
+    [SerializeField] int num_sheet = 0; // 現在のスコア
 
     private GameObject obj;
     private Rigidbody rb;
@@ -30,11 +29,11 @@ public class Basket : MonoBehaviour
                     bocol.enabled = false;
                     rb.isKinematic = true;
                     obj.transform.parent = basket.transform;
-                    score += scoreValue;
+                    num_sheet += 1;
                 }));
             }
             // 接触したオブジェクトの名前をコンソールに表示            
-            Debug.Log("Tea Leaf entered! Score: " + score);
+            Debug.Log("Tea Leaf entered! Score: " + num_sheet);
         }
     }
     private IEnumerator DelayCoroutine(float seconds, UnityAction callback)
@@ -51,8 +50,14 @@ public class Basket : MonoBehaviour
         if (other.CompareTag("TeaLeaf"))
         {
             Debug.Log(other.gameObject.name + "がトリガーから出ました。");  
-            score -= scoreValue;
-            Debug.Log("Tea Leaf exited! Score: " + score);
+            num_sheet -= 1;
+            Debug.Log("Tea Leaf exited! Score: " + num_sheet);
         }
+    }
+
+    //スコアを計算すべき
+    public int GetScore()
+    {
+        return num_sheet;
     }
 }

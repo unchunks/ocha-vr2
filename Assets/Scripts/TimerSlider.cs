@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class TimerSlider : MonoBehaviour
 {
+    [SerializeField] private GameManager gameManager;
     bool isStartTimer = false;
     public Slider timerSlider;
     public Image FillImage;
@@ -32,6 +33,7 @@ public class TimerSlider : MonoBehaviour
             if(timerSlider.value <= 0)
             {
                 Debug.Log("Time Up!");
+                gameManager.finishGame();
                 isStartTimer = false;
             }
         }
