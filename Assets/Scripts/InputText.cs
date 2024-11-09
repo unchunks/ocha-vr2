@@ -28,7 +28,12 @@ public class InputText : MonoBehaviour
             // 入力された名前をGameManagerに保存
             GameManager.playerName = inputField.text;
         }
-        
+        else
+        {
+            // 3文字未満の場合は名前を入力してくださいと表示
+            GameManager.playerName = "名も無き茶摘み人";
+        }
+
         // 入力された名前をDBに保存
         playFabController.LogInPlayFab(GameManager.playerName);
     }
