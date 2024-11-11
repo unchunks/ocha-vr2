@@ -11,8 +11,10 @@ public class Basket : MonoBehaviour
 
     private GameObject obj;
     private Rigidbody rb;
-    private BoxCollider bocol;
 
+    private List<Collider> waitKinematicColliderList = new List<Collider>();
+
+    int findedIndex;
      // お茶の葉が籠に入ったとき
     private void OnTriggerEnter(Collider other)
     {
@@ -22,18 +24,22 @@ public class Basket : MonoBehaviour
             rb = obj.GetComponent<Rigidbody>();
             if (rb.isKinematic == false)
             {
-                
                 Debug.Log(other.gameObject.name + "がトリガーに入りました。");  
+                waitKinematicColliderList.Add(other);
                 StartCoroutine(DelayCoroutine(0.4f, () => {
-                    bocol = obj.GetComponent<BoxCollider>();
-                    bocol.enabled = false;
-                    rb.isKinematic = true;
-                    obj.transform.parent = basket.transform;
-                    num_sheet += 1;
+                    
+                    // ウェイトリストの中にいれば
+                    if(waitKinematicColliderList.Contains(other))
+                    {
+                        // キネマティックにして籠に入れる
+                        obj.transform.parent = basket.transform;
+                        other.enabled = false;
+                        rb.isKinematic = true;
+                        num_sheet += 1;
+                        Debug.Log("Tea Leaf entered! Score: " + num_sheet);
+                    }
                 }));
             }
-            // 接触したオブジェクトの名前をコンソールに表示            
-            Debug.Log("Tea Leaf entered! Score: " + num_sheet);
         }
     }
     private IEnumerator DelayCoroutine(float seconds, UnityAction callback)
@@ -45,12 +51,21 @@ public class Basket : MonoBehaviour
     // お茶の葉が籠から出たとき
     private void OnTriggerExit(Collider other)
     {
-        
-        
         if (other.CompareTag("TeaLeaf"))
         {
+            findedIndex = waitKinematicColliderList.IndexOf(other);
+            if(findedIndex < 0)
+            {
+                Debug.Log("そんなことはない。。。はず");
+                return;
+            }
+            else
+            {
+                // キネマティック待ちリストから削除
+                waitKinematicColliderList.RemoveAt(findedIndex);
+            }
+
             Debug.Log(other.gameObject.name + "がトリガーから出ました。");  
-            num_sheet -= 1;
             Debug.Log("Tea Leaf exited! Score: " + num_sheet);
         }
     }
