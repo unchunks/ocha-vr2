@@ -61,8 +61,7 @@ public class GameManager : MonoBehaviour
     public void StartCountDown()
     {
         gameStatus = GameStatus.COUNTDOWNING;
-        countDownTime = 3.4f; // カウントダウンの初期化
-        countDownText.text = Mathf.Ceil(countDownTime).ToString();
+        countDownTime = 3.0f; // カウントダウンの初期化
     }
 
     // ゲーム開始の処理
@@ -70,6 +69,7 @@ public class GameManager : MonoBehaviour
     {
         gameStatus = GameStatus.PLAYING;
         bgmManager.startGameBGM();
+        audioManager.narasu(); // 開始時に効果音を再生
 
         if (shakeMove != null)
         {
