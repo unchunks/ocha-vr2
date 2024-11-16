@@ -31,6 +31,7 @@ public class Bomb1 : MonoBehaviour
     public void Kobayashibomp()
     {  
         Debug.Log("関数ないです Bomb!");
+        audiomanager.playChargeSound();
 
         StartCoroutine(DelayCoroutine(2f, () => {
             Debug.Log("ぶっとばす！！！！");

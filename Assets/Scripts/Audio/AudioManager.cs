@@ -12,6 +12,8 @@ public class AudioManager : MonoBehaviour
 
     public AudioClip guaaSound;
 
+    public AudioClip chargeSound;
+
     [SerializeField] AudioSource audioSource;
 
     // Start is called before the first frame update
@@ -43,5 +45,10 @@ public class AudioManager : MonoBehaviour
     public void playGuuSound()
     {
         audioSource.PlayOneShot(guaaSound);
+    }
+
+    public void playChargeSound()
+    {
+        audioSource.PlayOneShot(chargeSound);
     }
 }
