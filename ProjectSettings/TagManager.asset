@@ -8,6 +8,17 @@ TagManager:
   - QDSUIAccentColor
   - QDSUIPrimaryButton
   - TeaLeaf
+  - QDSUISecondaryButton
+  - QDSUIIcon
+  - QDSUITextInputField
+  - QDSUITextSecondaryColor
+  - WaitKinematicLeaf
+  - NotTouch
+  - Touched
+  - NotMove
+  - Basket
+  - Touched1
+  - Ochita
   layers:
   - Default
   - TransparentFX
